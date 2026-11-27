@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soal Coding Dasar Website &amp; AI</title>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--tx:#1d1d1b;--mut:#6b6b66;--ac:#2f5fd0;--ok:#1f8a4c;--no:#c43a3a;--bd:#dcdcd5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161618;--card:#212124;--tx:#ececea;--mut:#a0a09a;--ac:#7ea3ff;--ok:#5fcf8c;--no:#ff7b7b;--bd:#37373b}}
+:root[data-theme="dark"]{--bg:#161618;--card:#212124;--tx:#ececea;--mut:#a0a09a;--ac:#7ea3ff;--ok:#5fcf8c;--no:#ff7b7b;--bd:#37373b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:1.6rem;margin:.2em 0}h2{margin-top:2em;font-size:1.25rem}
+.sub{color:var(--mut);margin:0 0 1em}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px 16px;margin:12px 0}
+.q{font-weight:600;margin:0 0 8px}
+label{display:block;padding:6px 8px;border-radius:8px;cursor:pointer;overflow-x:auto}
+label:hover{background:var(--bg)}
+code,.opt{font-family:ui-monospace,Menlo,Consolas,monospace}
+.good{background:color-mix(in srgb,var(--ok) 20%,transparent)}
+.bad{background:color-mix(in srgb,var(--no) 20%,transparent)}
+textarea{width:100%;min-height:90px;border:1px solid var(--bd);border-radius:8px;padding:8px;background:var(--bg);color:var(--tx);font:inherit}
+button{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:12px 20px;font:inherit;font-weight:600;cursor:pointer;margin:6px 8px 0 0}
+button.alt{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.key{margin-top:8px;padding:8px 10px;border-left:3px solid var(--ok);background:var(--bg);display:none;white-space:pre-wrap}
+#score{font-size:1.3rem;font-weight:700;margin:12px 0;display:none}
+</style>
+</head>
+<body>
+<main>
+<h1>Soal Coding Dasar Website &amp; AI</h1>
+<p class="sub">35 pilihan ganda + 5 esai &middot; HTML, CSS, JavaScript dasar, dan pengenalan AI</p>
+<h2>Bagian A &ndash; Pilihan Ganda</h2>
+<div id="mc"></div>
+<button id="chk">Periksa Jawaban</button><button class="alt" id="rst">Ulangi</button>
+<div id="score"></div>
+<h2>Bagian B &ndash; Esai</h2>
+<div id="es"></div>
+</main>
+<script>
+// Format: [pertanyaan, jawaban benar, salah1, salah2, salah3] (opsi diacak otomatis)
+var MC=[
+['Apa kepanjangan HTML?','HyperText Markup Language','HighText Machine Language','Hyperlink Text Making Language','Home Tool Markup Language'],
+['Tag untuk judul paling besar adalah...','<h1>','<h6>','<head>','<title>'],
+['Tag untuk membuat paragraf adalah...','<p>','<para>','<pg>','<text>'],
+['Tag untuk membuat tautan (link) adalah...','<a>','<link>','<href>','<url>'],
+['Atribut yang berisi alamat tujuan tautan adalah...','href','src','alt','link'],
+['Tag untuk menampilkan gambar adalah...','<img>','<image>','<picture-src>','<photo>'],
+['Halusinasi pada AI berarti...','AI memberi jawaban yang terdengar meyakinkan tetapi salah','AI berhenti bekerja secara tiba-tiba','AI bekerja lebih cepat dari biasanya','AI menolak semua pertanyaan'],
+['Atribut alt pada gambar berfungsi untuk...','Teks alternatif jika gambar gagal tampil','Mengubah ukuran gambar','Menentukan alamat gambar','Memberi warna gambar'],
+['AI adalah singkatan dari...','Artificial Intelligence','Automated Internet','Advanced Interface','Applied Information'],
+['Tag daftar tidak berurutan (bullet) adalah...','<ul>','<ol>','<dl>','<list>'],
+['Machine Learning adalah...','Cabang AI yang membuat komputer belajar dari data','Program yang hanya menjalankan aturan tetap tanpa data','Perangkat keras khusus untuk menyimpan data','Bahasa pemrograman untuk membuat website'],
+['Model AI yang dilatih untuk memahami dan menghasilkan teks disebut...','Large Language Model (LLM)','Compiler','Relational Database','Web Server'],
+['Tag untuk membuat tabel adalah...','<table>','<tab>','<grid>','<tbl>'],
+['Instruksi atau pertanyaan yang diberikan pengguna kepada AI disebut...','Prompt','Cookie','Selector','Cache'],
+['Tag untuk sel judul kolom tabel adalah...','<th>','<td>','<thead-cell>','<tc>'],
+['Bahasa pemrograman yang paling populer untuk pengembangan AI adalah...','Python','HTML','CSS','SVG'],
+['Deklarasi dokumen HTML5 yang benar adalah...','<!DOCTYPE html>','<html5>','<!HTML version=5>','<doctype>'],
+['Konten yang tampil di jendela browser diletakkan di dalam tag...','<body>','<head>','<meta>','<header-top>'],
+['Tag <title> diletakkan di dalam...','<head>','<body>','<footer>','<main>'],
+['Tag untuk membuat formulir adalah...','<form>','<input-form>','<field>','<submit>'],
+['Untuk kolom isian teks satu baris digunakan...','<input type="text">','<input type="line">','<text-box>','<input type="string">'],
+['Tag semantik untuk teks yang dianggap penting (tebal) adalah...','<strong>','<bold-tag>','<big>','<heavy>'],
+['Kumpulan data yang dipakai untuk melatih model AI disebut...','Data latih (training data)','Stylesheet','Server log','Memori cache'],
+['Elemen kotak pembungkus umum bertipe block adalah...','<div>','<span>','<b>','<i>'],
+['Contoh penerapan AI pada sebuah website adalah...','Chatbot layanan pelanggan','Tag <br> untuk baris baru','Atribut href pada tautan','File CSS eksternal'],
+['Cara menulis komentar di HTML adalah...','<!-- komentar -->','// komentar','/* komentar */','# komentar'],
+['Pengenalan wajah dan objek pada gambar termasuk bidang AI yang disebut...','Computer Vision','Web Hosting','Basis Data','Jaringan Komputer'],
+['CSS adalah singkatan dari...','Cascading Style Sheets','Creative Style System','Computer Style Sheets','Colorful Style Script'],
+['Properti CSS untuk mengubah warna teks adalah...','color','text-style','font-paint','foreground'],
+['Selector CSS untuk elemen ber-class "menu" adalah...','.menu','#menu','menu()','*menu'],
+['Sikap yang bijak saat menggunakan AI adalah...','Memeriksa ulang hasilnya dan tidak memasukkan data pribadi sensitif','Menyalin semua hasil tanpa dicek','Memberikan password agar AI lebih akurat','Percaya sepenuhnya pada setiap jawaban'],
+['Cara menghubungkan file CSS eksternal adalah...','<link rel="stylesheet" href="style.css">','<css src="style.css">','<style href="style.css">','<script href="style.css">'],
+['Tag untuk menulis atau memanggil kode JavaScript adalah...','<script>','<js>','<javascript-code>','<code-js>'],
+['Perintah JavaScript untuk menampilkan kotak pesan adalah...','alert("Halo")','msg("Halo")','popup("Halo")','print.box("Halo")']
+];
+var ES=[
+['Jelaskan struktur dasar dokumen HTML5 dan fungsi masing-masing bagiannya (DOCTYPE, html, head, body)!','DOCTYPE memberi tahu browser bahwa dokumen memakai HTML5. <html> adalah elemen akar yang membungkus seluruh halaman. <head> berisi informasi tentang halaman yang tidak tampil langsung (title, meta charset, link CSS). <body> berisi seluruh konten yang tampil di browser seperti teks, gambar, tabel, dan formulir.'],
+['Jelaskan perbedaan AI, Machine Learning, dan Deep Learning, lalu berikan contoh penerapan AI pada sebuah website!','Dinilai terpisah.'],
+['Tuliskan kode HTML untuk formulir login sederhana yang memiliki kolom username, kolom password, dan tombol kirim!','<form action="#" method="post">\n  <label for="u">Username</label>\n  <input type="text" id="u" name="username">\n  <label for="p">Password</label>\n  <input type="password" id="p" name="password">\n  <button type="submit">Masuk</button>\n</form>'],
+['Sebutkan dan jelaskan tiga cara menerapkan CSS pada halaman web beserta kelebihannya!','1) Inline: atribut style pada elemen, cepat untuk perubahan kecil tetapi sulit dirawat. 2) Internal: tag <style> di dalam <head>, cocok untuk satu halaman. 3) Eksternal: file .css dihubungkan dengan <link>, paling rapi dan bisa dipakai banyak halaman sekaligus.'],
+['Jelaskan manfaat dan risiko memakai AI untuk membantu membuat website (misalnya menulis kode), serta bagaimana cara menggunakannya secara bijak!','Dinilai terpisah.']
+];
+function sh(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var L='ABCD',mc=document.getElementById('mc'),es=document.getElementById('es');
+function build(){
+ mc.innerHTML='';document.getElementById('score').style.display='none';document.getElementById('chk').disabled=false;
+ MC.forEach(function(m,i){
+  var c=document.createElement('div');c.className='card';
+  var q=document.createElement('p');q.className='q';q.textContent=(i+1)+'. '+m[0];c.appendChild(q);
+  sh(m.slice(1).map(function(t,k){return{t:t,ok:k===0}})).forEach(function(o,k){
+   var l=document.createElement('label');l.dataset.ok=o.ok?'1':'0';
+   var r=document.createElement('input');r.type='radio';r.name='q'+i;
+   var s=document.createElement('span');s.className='opt';s.textContent=' '+L[k]+'. '+o.t;
+   l.appendChild(r);l.appendChild(s);c.appendChild(l)});
+  mc.appendChild(c)})}
+build();
+ES.forEach(function(e,i){
+ var c=document.createElement('div');c.className='card';
+ var q=document.createElement('p');q.className='q';q.textContent=(36+i-1+0)+'. '+e[0];q.textContent=(i+1)+'. '+e[0];
+ var t=document.createElement('textarea');t.placeholder='Tulis jawabanmu di sini...';
+ c.appendChild(q);c.appendChild(t);es.appendChild(c)});
+document.getElementById('chk').onclick=function(){
+ var n=0;
+ mc.querySelectorAll('.card').forEach(function(c){
+  c.querySelectorAll('label').forEach(function(l){
+   var i=l.querySelector('input');if(i.checked&&l.dataset.ok==='1')n++;i.disabled=true})});
+ document.getElementById('chk').disabled=true;
+ var s=document.getElementById('score');
+ s.textContent='Nilai pilihan ganda: '+Math.round(n/MC.length*100)+' ('+n+' dari '+MC.length+' benar). Esai dinilai secara terpisah.';
+ s.style.display='block';s.scrollIntoView({behavior:'smooth',block:'center'})};
+document.getElementById('rst').onclick=function(){build();window.scrollTo(0,0)};
+</script>
+</body>
+</html>
